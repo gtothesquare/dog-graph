@@ -1,9 +1,12 @@
 
 const resolvers = {
   Query: {
-    breeds: async (_, { id }, { dataSources }) => {
-      return dataSources.dogsAPI.fetchAllBreeds();
+    dogs: async (_, { __ }, { dataSources }) => {
+      return dataSources.dogsAPI.fetchAllDogs();
     },
+    dog: async (_, { breed } , { dataSources }) => {
+      return dataSources.dogsAPI.fetchDogByBreed({ breed });
+    }
   }
 }
 
