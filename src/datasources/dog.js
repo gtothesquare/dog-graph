@@ -11,22 +11,18 @@ class DogAPI extends RESTDataSource {
 
   async fetchImages({ breed }) {
     const response = await this.get(`breed/${breed}/images`);
-    return response?.message || [];
+    return {
+      urls: response?.message || [],
+    };
   }
 
   async fetchAllDogs() {
     const response = await this.get('breeds/list/all');
-    const data = response?.message;
-    return Promise.all(
-      Object.keys(data).map(async (breed) => {
-        const images = await this.fetchImages({ breed });
-        return {
-          breed,
-          images,
-          subBreeds: data[breed],
-        };
-      })
-    );
+    const data = response?.message || [];
+    return Object.keys(data).map((breed) => ({
+      breed,
+      subBreeds: data[breed],
+    }));
   }
 
   async fetchDogByBreed({ breed }) {

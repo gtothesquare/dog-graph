@@ -1,9 +1,12 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
+    type DogImage {
+        urls: [String]
+    }
     type Dog {
         breed: ID,
-        images: [String],
+        image: DogImage,
         subBreeds: [String]
     }
     
